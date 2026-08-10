@@ -1,7 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { categories } from "@/lib/data/categories";
 import { Container } from "@/components/ui/Container";
-import { Crown } from "@/components/icons/Crown";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { InstagramIcon, TikTokIcon, YouTubeIcon, FacebookIcon } from "@/components/icons/Social";
 
@@ -18,9 +18,21 @@ export function Footer() {
       <Container>
         <div className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="mb-5 flex items-center gap-2.5">
-              <Crown className="h-6 w-8" />
-              <span className="font-display text-2xl tracking-[0.18em]">SKUBI</span>
+            <div className="mb-5 flex items-center gap-3">
+              <Image
+                src="/brand/sk-mark-cream.png"
+                alt=""
+                width={471}
+                height={495}
+                className="h-9 w-auto"
+              />
+              <Image
+                src="/brand/wordmark-cream.png"
+                alt="SKUBI"
+                width={702}
+                height={197}
+                className="h-4 w-auto"
+              />
             </div>
             <p className="mb-6 max-w-xs text-sm leading-relaxed text-cream/60">
               Heritage-sport premium, built quietly. Join the archive for early access

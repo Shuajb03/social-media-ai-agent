@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { Crown } from "@/components/icons/Crown";
 import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
@@ -14,7 +14,13 @@ export default function LoginPage() {
     <div className="py-20">
       <Container>
         <div className="mx-auto max-w-sm text-center">
-          <Crown className="mx-auto mb-5 h-8 w-10 text-gold-deep" />
+          <Image
+            src="/brand/sk-mark-ink.png"
+            alt=""
+            width={471}
+            height={495}
+            className="mx-auto mb-5 h-11 w-auto"
+          />
           <h1 className="font-display text-3xl text-ink">Welcome Back</h1>
           <p className="mt-2 text-sm text-ink/60">Sign in to view orders and your wishlist.</p>
           <form className="mt-8 space-y-4 text-left">

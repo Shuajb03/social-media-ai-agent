@@ -39,15 +39,35 @@ display / Inter body):
 - **Account** (`/account/login`, `/account/register`) — UI shells, no auth
   backend yet
 
+## Brand assets
+
+Real SKUBI assets live in `public/brand/` (logo marks, wordmark) and
+`public/products/` (product photography). Originals as supplied are kept in
+`brand-assets-source/` (not served publicly) in case higher-res crops or
+recolors are needed later.
+
+- `sk-mark-{ink,cream}.png` / `wordmark-{ink,cream}.png` — background-removed,
+  transparent PNGs extracted from the supplied logo files. `ink` variants are
+  for light backgrounds, `cream` for dark (header/hero/footer already use the
+  correct one per background).
+- `archive-mark-{ink,cream}.png` — the "Limited Archive System" coin mark,
+  already supplied as clean transparent PNGs. Not wired into any page yet —
+  a natural fit for a hang-tag/packaging or About-page seal treatment.
+- `src/app/icon.png`, `favicon.ico`, `apple-icon.png`, `opengraph-image.png`
+  are generated from the real mark.
+
 ## Notes for whoever picks this up next
 
 - **Product data** lives in `src/lib/data/products.ts` (mock catalog — swap
-  in a real CMS/PIM or hardcode real inventory when ready).
-- **Product imagery** is placeholder art (`src/components/ProductVisual.tsx`)
-  — an abstract SVG pattern system in brand tones, since there's no product
-  photography yet. Swap in real photos via `next/image` once shoots are
-  ready; the component signature (`pattern`, `tone`) can just be replaced
-  with an `src`.
+  in a real CMS/PIM or hardcode real inventory when ready). Only the
+  **SKUBI Crest Tee** (`skubi-crest-tee`) has real photography; everything
+  else still uses the placeholder art.
+- **Product imagery** falls back to placeholder art
+  (`src/components/ProductVisual.tsx`) — an abstract SVG pattern system in
+  brand tones — for any product without a real photoshoot yet. A product
+  gets real photos by adding an `images: string[]` array to its entry in
+  `products.ts`; `ProductThumb` and the PDP gallery (`ProductClient.tsx`)
+  automatically prefer real images over the abstract art when present.
 - **Cart / wishlist** are client-only (Zustand + localStorage). There's no
   backend, inventory, or payment gateway wired up.
 - **Checkout** is a UI-only flow (Cash on Delivery / Bank Transfer) — Kosovo

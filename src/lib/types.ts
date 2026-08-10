@@ -28,6 +28,7 @@ export interface Product {
   isNew?: boolean;
   tag?: string;
   tone: "ink" | "cream" | "gold";
+  images?: string[];
 }
 
 export interface JournalPost {

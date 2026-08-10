@@ -127,21 +127,26 @@ export const products: Product[] = [
   },
   {
     id: "p07",
-    slug: "archive-crown-tee",
-    name: "Archive Crown Tee",
+    slug: "skubi-crest-tee",
+    name: "SKUBI Crest Tee",
     category: "tops",
     price: 65,
-    colors: [INK, CREAM, STONE],
+    colors: [INK],
     sizes: SIZES,
     description:
-      "Heavyweight 240gsm cotton with a tonal embroidered crest. The everyday tee, done properly.",
+      "An oversized 240gsm cotton tee finished with the SK crest at the chest and mirrored large across the back. Heavyweight, boxy, built to be lived in.",
     details: [
-      "100% heavyweight cotton, 240gsm",
-      "Embroidered crest at chest",
+      "100% heavyweight cotton, 240gsm, oversized fit",
+      "Chest crest + full-back print",
       "Garment-washed for softness",
     ],
     sku: "SKB-TP-001",
     isNew: true,
+    images: [
+      "/products/skubi-crest-tee-front.jpg",
+      "/products/skubi-crest-tee-back.jpg",
+      "/products/skubi-crest-tee-detail.jpg",
+    ],
     tone: "ink",
   },
   {

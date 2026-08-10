@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 import clsx from "clsx";
 import { Product } from "@/lib/types";
 import { getCategory } from "@/lib/data/categories";
-import { ProductVisual } from "@/components/ProductVisual";
+import { ProductThumb } from "@/components/ProductThumb";
 import { formatPrice } from "@/lib/format";
 import { useWishlistStore } from "@/lib/store/wishlist";
 
@@ -18,9 +18,9 @@ export function ProductCard({ product }: { product: Product }) {
     <div className="group relative">
       <Link href={`/product/${product.slug}`} className="block">
         <div className="relative aspect-[4/5] overflow-hidden">
-          <ProductVisual
-            pattern={category?.pattern ?? "grid"}
-            tone={product.tone}
+          <ProductThumb
+            product={product}
+            sizes="(min-width: 1024px) 25vw, 50vw"
             className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
           <div className="absolute left-3 top-3 flex flex-col gap-1.5">

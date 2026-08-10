@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { ProductVisual } from "@/components/ProductVisual";
@@ -44,7 +45,13 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/20 to-ink" />
         <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">
-            <Crown className="mx-auto mb-6 h-8 w-10 text-gold" />
+            <Image
+              src="/brand/sk-mark-cream.png"
+              alt=""
+              width={471}
+              height={495}
+              className="mx-auto mb-6 h-12 w-auto"
+            />
             <p className="mb-4 text-[11px] uppercase tracking-widest-plus text-gold">
               Chapter I
             </p>
@@ -59,7 +66,13 @@ export default function AboutPage() {
         <Container>
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/5] overflow-hidden">
-              <ProductVisual pattern="quilt" tone="cream" className="h-full w-full" />
+              <Image
+                src="/products/skubi-crest-tee-detail.jpg"
+                alt="SK crest detail on the SKUBI Crest Tee"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
             </div>
             <div>
               <p className="mb-4 text-[11px] uppercase tracking-widest-plus text-gold-deep">

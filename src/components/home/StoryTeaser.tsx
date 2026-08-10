@@ -1,13 +1,19 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { Crown } from "@/components/icons/Crown";
 
 export function StoryTeaser() {
   return (
     <section className="py-24 sm:py-32">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <Crown className="mx-auto mb-6 h-8 w-10 text-gold" />
+          <Image
+            src="/brand/sk-mark-ink.png"
+            alt=""
+            width={471}
+            height={495}
+            className="mx-auto mb-6 h-12 w-auto"
+          />
           <p className="mb-4 text-[11px] uppercase tracking-widest-plus text-gold-deep">
             Our Position
           </p>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Minus, Plus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { ProductVisual } from "@/components/ProductVisual";
+import { ProductThumb } from "@/components/ProductThumb";
 import { useCartStore } from "@/lib/store/cart";
 import { products } from "@/lib/data/products";
 import { getCategory } from "@/lib/data/categories";
@@ -45,11 +45,7 @@ export default function CartPage() {
                         href={`/product/${product.slug}`}
                         className="relative h-36 w-28 shrink-0 overflow-hidden sm:h-40 sm:w-32"
                       >
-                        <ProductVisual
-                          pattern={category?.pattern ?? "grid"}
-                          tone={product.tone}
-                          className="h-full w-full"
-                        />
+                        <ProductThumb product={product} sizes="128px" className="h-full w-full" />
                       </Link>
                       <div className="flex flex-1 flex-col justify-between">
                         <div className="flex items-start justify-between gap-4">

@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { ProductVisual } from "@/components/ProductVisual";
-import { Crown } from "@/components/icons/Crown";
 
 export function Hero() {
   return (
@@ -16,7 +16,13 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <Crown className="mx-auto mb-6 h-9 w-12 text-gold" />
+          <Image
+            src="/brand/sk-mark-cream.png"
+            alt=""
+            width={471}
+            height={495}
+            className="mx-auto mb-6 h-14 w-auto"
+          />
         </motion.div>
         <motion.p
           initial={{ opacity: 0, y: 14 }}

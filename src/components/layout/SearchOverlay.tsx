@@ -6,9 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useUIStore } from "@/lib/store/ui";
 import { searchProducts } from "@/lib/data/products";
-import { getCategory } from "@/lib/data/categories";
 import { formatPrice } from "@/lib/format";
-import { ProductVisual } from "@/components/ProductVisual";
+import { ProductThumb } from "@/components/ProductThumb";
 import { Container } from "@/components/ui/Container";
 
 export function SearchOverlay() {
@@ -53,15 +52,10 @@ export function SearchOverlay() {
               ) : (
                 <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
                   {results.map((product) => {
-                    const category = getCategory(product.category);
                     return (
                       <Link key={product.id} href={`/product/${product.slug}`} onClick={close}>
                         <div className="relative aspect-[4/5] overflow-hidden">
-                          <ProductVisual
-                            pattern={category?.pattern ?? "grid"}
-                            tone={product.tone}
-                            className="h-full w-full"
-                          />
+                          <ProductThumb product={product} sizes="25vw" className="h-full w-full" />
                         </div>
                         <h3 className="mt-3 font-display text-base text-ink">{product.name}</h3>
                         <p className="mt-1 text-sm text-ink/60">{formatPrice(product.price)}</p>

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Search, User, Heart, ShoppingBag, Menu } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Crown } from "@/components/icons/Crown";
 import { useUIStore } from "@/lib/store/ui";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlistStore } from "@/lib/store/wishlist";
@@ -63,13 +63,23 @@ export function Header() {
             </nav>
           </div>
 
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 text-ink"
-            aria-label="SKUBI home"
-          >
-            <Crown className="h-6 w-8" />
-            <span className="font-display text-2xl tracking-[0.18em]">SKUBI</span>
+          <Link href="/" className="flex items-center gap-3" aria-label="SKUBI home">
+            <Image
+              src="/brand/sk-mark-ink.png"
+              alt=""
+              width={471}
+              height={495}
+              priority
+              className="h-9 w-auto"
+            />
+            <Image
+              src="/brand/wordmark-ink.png"
+              alt="SKUBI"
+              width={702}
+              height={197}
+              priority
+              className="hidden h-4 w-auto sm:block"
+            />
           </Link>
 
           <div className="flex items-center gap-5">

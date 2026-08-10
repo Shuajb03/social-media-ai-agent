@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Heart, Minus, Plus, Check } from "lucide-react";
 import clsx from "clsx";
@@ -37,6 +38,9 @@ export function ProductClient({
   const wishlisted = useWishlistStore((s) => s.has(product.id));
   const toggleWishlist = useWishlistStore((s) => s.toggle);
 
+  const hasRealImages = Boolean(product.images && product.images.length > 0);
+  const viewCount = hasRealImages ? product.images!.length : VIEW_TONES.length;
+
   function handleAddToCart() {
     if (!size) {
       setSizeError(true);
@@ -52,16 +56,27 @@ export function ProductClient({
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
         <div className="relative aspect-[4/5] overflow-hidden">
-          <ProductVisual
-            pattern={categoryPattern}
-            tone={VIEW_TONES[activeView]}
-            className="h-full w-full"
-          />
+          {hasRealImages ? (
+            <Image
+              src={product.images![activeView]}
+              alt={product.name}
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <ProductVisual
+              pattern={categoryPattern}
+              tone={VIEW_TONES[activeView]}
+              className="h-full w-full"
+            />
+          )}
         </div>
         <div className="mt-4 grid grid-cols-3 gap-4">
-          {VIEW_TONES.map((tone, i) => (
+          {Array.from({ length: viewCount }).map((_, i) => (
             <button
-              key={tone}
+              key={i}
               type="button"
               onClick={() => setActiveView(i)}
               className={clsx(
@@ -69,7 +84,21 @@ export function ProductClient({
                 activeView === i ? "border-gold" : "border-transparent"
               )}
             >
-              <ProductVisual pattern={categoryPattern} tone={tone} className="h-full w-full" />
+              {hasRealImages ? (
+                <Image
+                  src={product.images![i]}
+                  alt={`${product.name} view ${i + 1}`}
+                  fill
+                  sizes="16vw"
+                  className="object-cover"
+                />
+              ) : (
+                <ProductVisual
+                  pattern={categoryPattern}
+                  tone={VIEW_TONES[i]}
+                  className="h-full w-full"
+                />
+              )}
             </button>
           ))}
         </div>

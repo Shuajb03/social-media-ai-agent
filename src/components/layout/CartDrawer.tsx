@@ -7,8 +7,7 @@ import { useUIStore } from "@/lib/store/ui";
 import { useCartStore } from "@/lib/store/cart";
 import { products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
-import { ProductVisual } from "@/components/ProductVisual";
-import { getCategory } from "@/lib/data/categories";
+import { ProductThumb } from "@/components/ProductThumb";
 import { Button } from "@/components/ui/Button";
 
 export function CartDrawer() {
@@ -60,7 +59,6 @@ export function CartDrawer() {
                     {lines.map((line) => {
                       const product = products.find((p) => p.id === line.productId);
                       if (!product) return null;
-                      const category = getCategory(product.category);
                       return (
                         <li key={`${line.productId}-${line.size}-${line.color}`} className="flex gap-4">
                           <Link
@@ -68,11 +66,7 @@ export function CartDrawer() {
                             onClick={close}
                             className="relative h-28 w-24 shrink-0 overflow-hidden"
                           >
-                            <ProductVisual
-                              pattern={category?.pattern ?? "grid"}
-                              tone={product.tone}
-                              className="h-full w-full"
-                            />
+                            <ProductThumb product={product} sizes="96px" className="h-full w-full" />
                           </Link>
                           <div className="flex flex-1 flex-col justify-between">
                             <div>

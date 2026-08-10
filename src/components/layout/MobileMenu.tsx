@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { categories } from "@/lib/data/categories";
 import { useUIStore } from "@/lib/store/ui";
-import { Crown } from "@/components/icons/Crown";
 
 export function MobileMenu() {
   const open = useUIStore((s) => s.mobileMenuOpen);
@@ -30,9 +30,9 @@ export function MobileMenu() {
             transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
           >
             <div className="flex h-20 items-center justify-between border-b border-line px-5">
-              <div className="flex items-center gap-2 text-ink">
-                <Crown className="h-5 w-6" />
-                <span className="font-display text-xl tracking-[0.18em]">SKUBI</span>
+              <div className="flex items-center gap-2.5">
+                <Image src="/brand/sk-mark-ink.png" alt="" width={471} height={495} className="h-8 w-auto" />
+                <Image src="/brand/wordmark-ink.png" alt="SKUBI" width={702} height={197} className="h-3.5 w-auto" />
               </div>
               <button type="button" aria-label="Close menu" onClick={close}>
                 <X className="h-5 w-5" strokeWidth={1.5} />
