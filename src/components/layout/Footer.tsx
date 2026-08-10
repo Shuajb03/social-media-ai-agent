@@ -6,10 +6,14 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { InstagramIcon, TikTokIcon, YouTubeIcon, FacebookIcon } from "@/components/icons/Social";
 
 const SOCIALS = [
-  { label: "Instagram", href: "https://instagram.com/skubi", Icon: InstagramIcon },
-  { label: "TikTok", href: "https://tiktok.com/@skubi_brand", Icon: TikTokIcon },
-  { label: "YouTube", href: "https://youtube.com/@skubi", Icon: YouTubeIcon },
-  { label: "Facebook", href: "https://facebook.com/skubiofficial", Icon: FacebookIcon },
+  { label: "Instagram", href: "https://www.instagram.com/skubiofficial/", Icon: InstagramIcon },
+  { label: "TikTok", href: "https://www.tiktok.com/@skubiofficial", Icon: TikTokIcon },
+  { label: "YouTube", href: "https://www.youtube.com/@SkubiBrand", Icon: YouTubeIcon },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61591775911879",
+    Icon: FacebookIcon,
+  },
 ];
 
 export function Footer() {
