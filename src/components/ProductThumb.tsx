@@ -32,6 +32,7 @@ export function ProductThumb({
     <ProductVisual
       pattern={category?.pattern ?? "grid"}
       tone={product.tone}
+      label="Coming Soon"
       className={className ?? "h-full w-full"}
     />
   );

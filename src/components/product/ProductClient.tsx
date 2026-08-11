@@ -69,6 +69,7 @@ export function ProductClient({
             <ProductVisual
               pattern={categoryPattern}
               tone={VIEW_TONES[activeView]}
+              label="Coming Soon"
               className="h-full w-full"
             />
           )}

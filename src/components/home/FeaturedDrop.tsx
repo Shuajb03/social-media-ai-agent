@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { ProductVisual } from "@/components/ProductVisual";
+import { ProductThumb } from "@/components/ProductThumb";
 import { getProduct } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 
@@ -13,7 +13,7 @@ export function FeaturedDrop() {
       <Container>
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="relative aspect-[4/5] overflow-hidden lg:order-2">
-            <ProductVisual pattern="quilt" tone="cream" className="h-full w-full" />
+            <ProductThumb product={product} sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full" />
           </div>
           <div className="lg:order-1">
             <p className="mb-4 text-[11px] uppercase tracking-widest-plus text-gold">

@@ -20,6 +20,18 @@ const TONE_MARK: Record<string, string> = {
   gold: "text-ink/[0.2]",
 };
 
+const TONE_LABEL: Record<string, string> = {
+  ink: "text-cream/70",
+  cream: "text-ink/60",
+  gold: "text-ink/65",
+};
+
+const TONE_LABEL_LINE: Record<string, string> = {
+  ink: "bg-cream/30",
+  cream: "bg-ink/25",
+  gold: "bg-ink/25",
+};
+
 function Pattern({ id, className }: { id: PatternId; className: string }) {
   const patternId = `p-${id}`;
   return (
@@ -65,10 +77,12 @@ function Pattern({ id, className }: { id: PatternId; className: string }) {
 export function ProductVisual({
   pattern,
   tone,
+  label,
   className,
 }: {
   pattern: PatternId;
   tone: "ink" | "cream" | "gold";
+  label?: string;
   className?: string;
 }) {
   return (
@@ -81,8 +95,21 @@ export function ProductVisual({
       )}
     >
       <Pattern id={pattern} className={TONE_LINE[tone]} />
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
         <Crown className={clsx("h-16 w-20 sm:h-20 sm:w-24", TONE_MARK[tone])} />
+        {label && (
+          <div className="flex flex-col items-center gap-2">
+            <span className={clsx("h-px w-8", TONE_LABEL_LINE[tone])} />
+            <span
+              className={clsx(
+                "text-[10px] uppercase tracking-widest-plus sm:text-[11px]",
+                TONE_LABEL[tone]
+              )}
+            >
+              {label}
+            </span>
+          </div>
+        )}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
     </div>
