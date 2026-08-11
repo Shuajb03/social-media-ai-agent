@@ -5,7 +5,7 @@ import { getProduct } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 
 export function FeaturedDrop() {
-  const product = getProduct("chapter-i-wool-overcoat");
+  const product = getProduct("skubi-crest-tee");
   if (!product) return null;
 
   return (
@@ -30,8 +30,8 @@ export function FeaturedDrop() {
               <Button href={`/product/${product.slug}`} variant="secondary" size="lg">
                 Shop This Piece
               </Button>
-              <Button href="/shop/outerwear" variant="outline-cream" size="lg">
-                View Outerwear
+              <Button href="/shop/tops" variant="outline-cream" size="lg">
+                View Tops
               </Button>
             </div>
           </div>

@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     template: "%s — SKUBI",
   },
   description:
-    "SKUBI is a premium heritage-sport clothing house. Considered outerwear, knitwear, and essentials, built for people who don't need the room to notice.",
+    "SKUBI is a premium heritage-sport clothing house. Minimal, considered sportswear, built for people who don't need the room to notice.",
   openGraph: {
     title: "SKUBI — Heritage, Worn Quietly",
     description:
-      "Considered outerwear, knitwear, and essentials from SKUBI. Quality over volume, always.",
+      "Minimal, premium sportswear from SKUBI. Quality over volume, always.",
     url: "https://skubiwear.com",
     siteName: "SKUBI",
     type: "website",

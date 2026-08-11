@@ -45,7 +45,7 @@ export function SearchOverlay() {
             <div className="py-10">
               {query.trim() === "" ? (
                 <p className="text-sm text-ink/50">
-                  Try &ldquo;Overcoat&rdquo;, &ldquo;Knitwear&rdquo;, or &ldquo;Bestseller&rdquo;.
+                  Try &ldquo;Hoodie&rdquo;, &ldquo;Tee&rdquo;, or &ldquo;Cap&rdquo;.
                 </p>
               ) : results.length === 0 ? (
                 <p className="text-sm text-ink/50">No results for &ldquo;{query}&rdquo;.</p>

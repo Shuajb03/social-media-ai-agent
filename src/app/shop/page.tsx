@@ -6,7 +6,7 @@ import { ChapterOneBanner } from "@/components/shop/ChapterOneBanner";
 
 export const metadata: Metadata = {
   title: "Shop All",
-  description: "Browse the full SKUBI archive — outerwear, knitwear, tops, bottoms, and accessories.",
+  description: "Browse the full SKUBI archive — tops, bottoms, sets, and accessories.",
 };
 
 export default function ShopPage() {

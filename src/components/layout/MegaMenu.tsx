@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { categories } from "@/lib/data/categories";
 import { Container } from "@/components/ui/Container";
-import { ProductVisual } from "@/components/ProductVisual";
+import { ProductThumb } from "@/components/ProductThumb";
+import { getProduct } from "@/lib/data/products";
 
 export function MegaMenu({ onClose }: { onClose: () => void }) {
+  const featured = getProduct("skubi-crest-tee");
+
   return (
     <div className="fixed inset-x-0 top-20 z-30 border-b border-line bg-cream shadow-[0_20px_40px_-20px_rgba(20,17,15,0.15)]">
       <Container>
@@ -31,25 +34,27 @@ export function MegaMenu({ onClose }: { onClose: () => void }) {
             </Link>
           </div>
           <div className="col-span-5">
-            <Link
-              href="/shop/outerwear"
-              onClick={onClose}
-              className="group relative block aspect-[16/9] overflow-hidden"
-            >
-              <ProductVisual
-                pattern="quilt"
-                tone="ink"
-                className="h-full w-full transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
-                <p className="text-[11px] uppercase tracking-widest-plus text-cream/70">
-                  Chapter I
-                </p>
-                <h4 className="mt-1 font-display text-2xl text-cream">
-                  The Overcoat Edit
-                </h4>
-              </div>
-            </Link>
+            {featured && (
+              <Link
+                href={`/product/${featured.slug}`}
+                onClick={onClose}
+                className="group relative block aspect-[16/9] overflow-hidden"
+              >
+                <ProductThumb
+                  product={featured}
+                  sizes="40vw"
+                  className="h-full w-full transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+                  <p className="text-[11px] uppercase tracking-widest-plus text-cream/70">
+                    Chapter I
+                  </p>
+                  <h4 className="mt-1 font-display text-2xl text-cream">
+                    {featured.name}
+                  </h4>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </Container>

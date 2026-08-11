@@ -5,6 +5,7 @@ import { products } from "@/lib/data/products";
 import { Container } from "@/components/ui/Container";
 import { ShopClient } from "@/components/shop/ShopClient";
 import { ChapterOneBanner } from "@/components/shop/ChapterOneBanner";
+import { CategoryComingSoon } from "@/components/shop/CategoryComingSoon";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ category: c.slug }));
@@ -46,7 +47,11 @@ export default async function CategoryPage({
           </p>
           <h1 className="font-display text-4xl text-ink sm:text-5xl">{category.name}</h1>
         </div>
-        <ShopClient products={categoryProducts} lockedCategory={category.id} />
+        {categoryProducts.length === 0 ? (
+          <CategoryComingSoon categoryName={category.name} />
+        ) : (
+          <ShopClient products={categoryProducts} lockedCategory={category.id} />
+        )}
       </Container>
     </div>
   );

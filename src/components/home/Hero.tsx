@@ -46,8 +46,8 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
           className="mx-auto mt-6 max-w-lg text-balance text-base leading-relaxed text-cream/70"
         >
-          Considered outerwear, knitwear, and essentials for people who buy for the
-          craft, not the hype cycle.
+          Minimal, premium sportswear for people who buy for the craft, not the
+          hype cycle.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

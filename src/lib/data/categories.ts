@@ -2,20 +2,6 @@ import { Category } from "@/lib/types";
 
 export const categories: Category[] = [
   {
-    id: "outerwear",
-    slug: "outerwear",
-    name: "Outerwear",
-    tagline: "Built for the long game",
-    pattern: "quilt",
-  },
-  {
-    id: "knitwear",
-    slug: "knitwear",
-    name: "Knitwear",
-    tagline: "Quiet luxury, close to the skin",
-    pattern: "rib",
-  },
-  {
     id: "tops",
     slug: "tops",
     name: "Tops",
@@ -26,8 +12,15 @@ export const categories: Category[] = [
     id: "bottoms",
     slug: "bottoms",
     name: "Bottoms",
-    tagline: "Tailored ease",
+    tagline: "Built to move",
     pattern: "herringbone",
+  },
+  {
+    id: "sets",
+    slug: "sets",
+    name: "Sets",
+    tagline: "Matched, not matchy",
+    pattern: "quilt",
   },
   {
     id: "accessories",

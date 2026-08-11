@@ -9,9 +9,6 @@ import { JournalTeaser } from "@/components/home/JournalTeaser";
 import { NewsletterBand } from "@/components/home/NewsletterBand";
 
 export default function Home() {
-  const firstPieces = products.filter((p) => p.isNew).slice(0, 4);
-  const selectedPieces = products.filter((p) => !p.isNew).slice(0, 4);
-
   return (
     <>
       <Hero />
@@ -20,16 +17,10 @@ export default function Home() {
       <ProductGridSection
         eyebrow="Chapter I"
         title="The first pieces"
-        products={firstPieces}
+        products={products}
         viewAllHref="/shop"
       />
       <FeaturedDrop />
-      <ProductGridSection
-        eyebrow="The Edit"
-        title="Selected pieces"
-        products={selectedPieces}
-        viewAllHref="/shop"
-      />
       <StoryTeaser />
       <JournalTeaser />
       <NewsletterBand />
