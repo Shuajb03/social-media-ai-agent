@@ -4,6 +4,7 @@ import { categories, getCategory } from "@/lib/data/categories";
 import { products } from "@/lib/data/products";
 import { Container } from "@/components/ui/Container";
 import { ShopClient } from "@/components/shop/ShopClient";
+import { ChapterOneBanner } from "@/components/shop/ChapterOneBanner";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ category: c.slug }));
@@ -33,10 +34,12 @@ export default async function CategoryPage({
   if (!category) notFound();
 
   const categoryProducts = products.filter((p) => p.category === category.id);
+  const hasComingSoon = categoryProducts.some((p) => !p.images || p.images.length === 0);
 
   return (
-    <div className="py-14 sm:py-16">
-      <Container>
+    <div className="pb-14 sm:pb-16">
+      {hasComingSoon && <ChapterOneBanner />}
+      <Container className={hasComingSoon ? "" : "pt-14 sm:pt-16"}>
         <div className="mb-10">
           <p className="mb-2 text-[11px] uppercase tracking-widest-plus text-gold-deep">
             {category.tagline}

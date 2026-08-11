@@ -3,10 +3,17 @@
 import { FormEvent, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import clsx from "clsx";
+import { markNewsletterPopupDismissed } from "@/lib/newsletterPopup";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export function NewsletterForm({ tone = "cream" }: { tone?: "cream" | "ink" }) {
+export function NewsletterForm({
+  tone = "cream",
+  onSuccess,
+}: {
+  tone?: "cream" | "ink";
+  onSuccess?: () => void;
+}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -28,6 +35,8 @@ export function NewsletterForm({ tone = "cream" }: { tone?: "cream" | "ink" }) {
 
       if (res.ok) {
         setStatus("success");
+        markNewsletterPopupDismissed();
+        onSuccess?.();
       } else {
         setStatus("error");
         setErrorMessage(data?.error || "Something went wrong. Please try again.");

@@ -7,14 +7,14 @@ export function NewsletterBand() {
       <Container>
         <div className="flex flex-col items-center gap-6 text-center">
           <p className="text-[11px] uppercase tracking-widest-plus text-gold">
-            Join the Archive
+            Founding Members
           </p>
           <h2 className="font-display text-3xl leading-tight text-balance sm:text-4xl">
-            First access to new chapters
+            First access to Chapter I
           </h2>
           <p className="max-w-md text-sm text-cream/60">
-            No spam, no shouting. Just the pieces worth knowing about, before
-            everyone else does.
+            No spam, no shouting, no discount games. Join now and you&rsquo;re a
+            founding member of the Archive — first to know when Chapter I opens.
           </p>
           <NewsletterForm tone="cream" />
         </div>

@@ -39,8 +39,8 @@ export function Footer() {
               />
             </div>
             <p className="mb-6 max-w-xs text-sm leading-relaxed text-cream/60">
-              Heritage-sport premium, built quietly. Join the archive for early access
-              to new chapters.
+              Made slowly. Worn often. Kept longer. Join the Archive for founding-member
+              access to Chapter I.
             </p>
             <NewsletterForm tone="cream" />
           </div>

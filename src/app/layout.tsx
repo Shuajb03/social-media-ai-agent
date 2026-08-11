@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
+import { NewsletterPopup } from "@/components/NewsletterPopup";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MobileMenu />
         <CartDrawer />
         <SearchOverlay />
+        <NewsletterPopup />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
