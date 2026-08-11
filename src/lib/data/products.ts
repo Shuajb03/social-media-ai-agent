@@ -56,7 +56,6 @@ export const products: Product[] = [
     name: "Regency Wax Trench",
     category: "outerwear",
     price: 365,
-    compareAtPrice: 410,
     colors: [STONE, INK],
     sizes: SIZES,
     description:
@@ -67,7 +66,6 @@ export const products: Product[] = [
       "Wipe clean, re-wax annually",
     ],
     sku: "SKB-OC-003",
-    tag: "Restock",
     tone: "gold",
   },
   {
@@ -201,7 +199,6 @@ export const products: Product[] = [
       "Machine wash cold, inside out",
     ],
     sku: "SKB-TP-004",
-    tag: "Bestseller",
     tone: "gold",
   },
   {
@@ -340,7 +337,6 @@ export const products: Product[] = [
       "Adjustable strap",
     ],
     sku: "SKB-AC-005",
-    tag: "Bestseller",
     tone: "ink",
   },
 ];

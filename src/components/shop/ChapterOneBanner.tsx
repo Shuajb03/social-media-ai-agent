@@ -12,12 +12,12 @@ export function ChapterOneBanner() {
             Chapter I
           </p>
           <h2 className="font-display text-2xl leading-tight text-balance sm:text-3xl">
-            The first collection is on its way.
+            Chapter I is on its way.
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-cream/65">
-            Every piece below is real — we&rsquo;re just releasing slowly and
-            deliberately, not rushing a launch to hit a date. Founding members of the
-            Archive get first access when Chapter I opens.
+            The pieces below form Chapter I &mdash; designed and being developed
+            carefully for release, not rushed to hit a date. Founding members of the
+            Archive get first access when it opens.
           </p>
           <div className="mt-6 flex justify-center">
             <NewsletterForm tone="cream" />

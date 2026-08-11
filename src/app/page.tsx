@@ -9,11 +9,8 @@ import { JournalTeaser } from "@/components/home/JournalTeaser";
 import { NewsletterBand } from "@/components/home/NewsletterBand";
 
 export default function Home() {
-  const newArrivals = products.filter((p) => p.isNew).slice(0, 4);
-  const bestsellers = products
-    .filter((p) => p.tag === "Bestseller" || p.tag === "Restock")
-    .concat(products.filter((p) => !p.tag))
-    .slice(0, 4);
+  const firstPieces = products.filter((p) => p.isNew).slice(0, 4);
+  const selectedPieces = products.filter((p) => !p.isNew).slice(0, 4);
 
   return (
     <>
@@ -21,16 +18,16 @@ export default function Home() {
       <Marquee />
       <CategoryStrip />
       <ProductGridSection
-        eyebrow="Just In"
-        title="New arrivals"
-        products={newArrivals}
+        eyebrow="Chapter I"
+        title="The first pieces"
+        products={firstPieces}
         viewAllHref="/shop"
       />
       <FeaturedDrop />
       <ProductGridSection
-        eyebrow="Most Wanted"
-        title="Bestsellers"
-        products={bestsellers}
+        eyebrow="The Edit"
+        title="Selected pieces"
+        products={selectedPieces}
         viewAllHref="/shop"
       />
       <StoryTeaser />
