@@ -37,17 +37,21 @@ export async function POST(req: NextRequest) {
     }
   );
 
-  if (res.ok) {
-    return NextResponse.json({ ok: true });
-  }
-
   const data = await res.json().catch(() => null);
+
+  if (res.ok) {
+    // TEMPORARY debug field — remove once signup is confirmed working end to end.
+    return NextResponse.json({ ok: true, debug: data });
+  }
 
   // Already subscribed — treat as success so we don't leak subscription status
   if (data?.title === "Member Exists") {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, debug: data });
   }
 
   console.error("Mailchimp signup error:", data);
-  return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 502 });
+  return NextResponse.json(
+    { error: "Something went wrong. Please try again.", debug: data },
+    { status: 502 }
+  );
 }
