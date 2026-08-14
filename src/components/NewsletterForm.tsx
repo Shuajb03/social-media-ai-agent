@@ -52,7 +52,7 @@ export function NewsletterForm({
   if (status === "success") {
     return (
       <p className={clsx("text-sm", isCream ? "text-cream" : "text-ink")}>
-        Almost there — check your inbox to confirm your email.
+        You&rsquo;re on the list — welcome to the Archive.
       </p>
     );
   }

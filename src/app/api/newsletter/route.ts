@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHash } from "crypto";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -22,17 +23,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Upsert by subscriber hash (MD5 of lowercased email) so a repeat signup
+  // updates the existing record instead of erroring, and new signups go
+  // straight to "subscribed" — no double opt-in confirmation email needed.
+  const subscriberHash = createHash("md5").update(email.toLowerCase()).digest("hex");
+
   const res = await fetch(
-    `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members`,
+    `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members/${subscriberHash}`,
     {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Basic ${Buffer.from(`anystring:${apiKey}`).toString("base64")}`,
       },
       body: JSON.stringify({
         email_address: email,
-        status: "pending", // double opt-in — Mailchimp emails a confirmation link
+        status_if_new: "subscribed",
       }),
     }
   );
@@ -41,11 +47,6 @@ export async function POST(req: NextRequest) {
 
   if (res.ok) {
     // TEMPORARY debug field — remove once signup is confirmed working end to end.
-    return NextResponse.json({ ok: true, debug: data });
-  }
-
-  // Already subscribed — treat as success so we don't leak subscription status
-  if (data?.title === "Member Exists") {
     return NextResponse.json({ ok: true, debug: data });
   }
 
