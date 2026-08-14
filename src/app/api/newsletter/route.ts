@@ -43,16 +43,11 @@ export async function POST(req: NextRequest) {
     }
   );
 
-  const data = await res.json().catch(() => null);
-
   if (res.ok) {
-    // TEMPORARY debug field — remove once signup is confirmed working end to end.
-    return NextResponse.json({ ok: true, debug: data });
+    return NextResponse.json({ ok: true });
   }
 
+  const data = await res.json().catch(() => null);
   console.error("Mailchimp signup error:", data);
-  return NextResponse.json(
-    { error: "Something went wrong. Please try again.", debug: data },
-    { status: 502 }
-  );
+  return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 502 });
 }
