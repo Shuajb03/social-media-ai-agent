@@ -91,7 +91,7 @@ export function Footer() {
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/contact" className="text-sm text-cream/75 transition-colors hover:text-gold">
+                  <Link href="/shipping-returns" className="text-sm text-cream/75 transition-colors hover:text-gold">
                     Shipping &amp; Returns
                   </Link>
                 </li>
@@ -103,6 +103,16 @@ export function Footer() {
                 <li>
                   <Link href="/contact" className="text-sm text-cream/75 transition-colors hover:text-gold">
                     Track Order
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="text-sm text-cream/75 transition-colors hover:text-gold">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="text-sm text-cream/75 transition-colors hover:text-gold">
+                    Terms of Service
                   </Link>
                 </li>
               </ul>

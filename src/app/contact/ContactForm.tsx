@@ -6,10 +6,40 @@ import { Button } from "@/components/ui/Button";
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    if (submitting) return;
+    setSubmitting(true);
+    setError("");
+
+    const data = new FormData(e.currentTarget);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          topic: data.get("topic"),
+          message: data.get("message"),
+        }),
+      });
+      const result = await res.json();
+
+      if (res.ok) {
+        setSent(true);
+      } else {
+        setError(result?.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (sent) {
@@ -26,10 +56,10 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <input required placeholder="Full name" className="fld" />
-        <input required type="email" placeholder="Email address" className="fld" />
+        <input name="name" required placeholder="Full name" className="fld" />
+        <input name="email" required type="email" placeholder="Email address" className="fld" />
       </div>
-      <select required defaultValue="" className="fld">
+      <select name="topic" required defaultValue="" className="fld">
         <option value="" disabled>
           What&rsquo;s this about?
         </option>
@@ -39,10 +69,11 @@ export function ContactForm() {
         <option>Press &amp; Collaborations</option>
         <option>Something Else</option>
       </select>
-      <textarea required placeholder="Your message" rows={5} className="fld resize-none" />
-      <Button type="submit" size="lg">
-        Send Message
+      <textarea name="message" required placeholder="Your message" rows={5} className="fld resize-none" />
+      <Button type="submit" size="lg" disabled={submitting}>
+        {submitting ? "Sending..." : "Send Message"}
       </Button>
+      {error && <p className="text-xs text-red-700/80">{error}</p>}
     </form>
   );
 }

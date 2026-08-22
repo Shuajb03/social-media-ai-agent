@@ -19,15 +19,49 @@ export default function CheckoutPage() {
   const [payment, setPayment] = useState<PaymentMethod>("cod");
   const [placed, setPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const shippingEstimate = subtotal >= 150 || subtotal === 0 ? 0 : 12;
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const num = `SKB-${Math.floor(100000 + Math.random() * 900000)}`;
-    setOrderNumber(num);
-    setPlaced(true);
-    clear();
+    if (submitting) return;
+    setSubmitting(true);
+    setError("");
+
+    const data = new FormData(e.currentTarget);
+
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+          address: data.get("address"),
+          city: data.get("city"),
+          postalCode: data.get("postalCode"),
+          country: data.get("country"),
+          payment,
+          lines,
+        }),
+      });
+      const result = await res.json();
+
+      if (res.ok) {
+        setOrderNumber(result.orderNumber);
+        setPlaced(true);
+        clear();
+      } else {
+        setError(result?.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (placed) {
@@ -77,9 +111,9 @@ export default function CheckoutPage() {
                 Contact
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <input required placeholder="Full name" className="fld" />
-                <input required type="email" placeholder="Email address" className="fld" />
-                <input required type="tel" placeholder="Phone number" className="fld sm:col-span-2" />
+                <input name="name" required placeholder="Full name" className="fld" />
+                <input name="email" required type="email" placeholder="Email address" className="fld" />
+                <input name="phone" required type="tel" placeholder="Phone number" className="fld sm:col-span-2" />
               </div>
             </section>
 
@@ -88,10 +122,10 @@ export default function CheckoutPage() {
                 Shipping Address
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <input required placeholder="Address" className="fld sm:col-span-2" />
-                <input required placeholder="City" className="fld" />
-                <input required placeholder="Postal code" className="fld" />
-                <select required defaultValue="" className="fld sm:col-span-2">
+                <input name="address" required placeholder="Address" className="fld sm:col-span-2" />
+                <input name="city" required placeholder="City" className="fld" />
+                <input name="postalCode" required placeholder="Postal code" className="fld" />
+                <select name="country" required defaultValue="" className="fld sm:col-span-2">
                   <option value="" disabled>
                     Country
                   </option>
@@ -183,12 +217,15 @@ export default function CheckoutPage() {
                 <span>Total</span>
                 <span>{formatPrice(subtotal + shippingEstimate)}</span>
               </div>
-              <Button type="submit" className="mt-6 w-full">
-                Place Order
+              <Button type="submit" disabled={submitting} className="mt-6 w-full">
+                {submitting ? "Placing Order..." : "Place Order"}
               </Button>
+              {error && (
+                <p className="mt-3 text-center text-xs text-red-700/80">{error}</p>
+              )}
               <p className="mt-4 text-center text-[11px] text-ink/40">
                 By placing this order you agree to our{" "}
-                <Link href="/contact" className="underline underline-offset-4">
+                <Link href="/terms" className="underline underline-offset-4">
                   terms
                 </Link>
                 .
