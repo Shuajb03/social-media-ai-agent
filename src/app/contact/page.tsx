@@ -47,8 +47,8 @@ export default function ContactPage() {
               </h2>
               <p className="text-sm text-ink/70">
                 Email:{" "}
-                <a href="mailto:hello@skubiwear.com" className="text-ink underline underline-offset-4">
-                  hello@skubiwear.com
+                <a href="mailto:support@skubiwear.com" className="text-ink underline underline-offset-4">
+                  support@skubiwear.com
                 </a>
               </p>
               <p className="mt-1 text-sm text-ink/70">Based in Kosovo &middot; Shipping to the EU</p>

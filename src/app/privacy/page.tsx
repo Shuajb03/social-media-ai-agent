@@ -55,8 +55,8 @@ export default function PrivacyPage() {
                 You can ask us at any time what data we hold about you, ask us to correct or delete
                 it, or unsubscribe from our mailing list (every email includes an unsubscribe link).
                 To make any of these requests, email{" "}
-                <a href="mailto:hello@skubiwear.com" className="text-ink underline underline-offset-4">
-                  hello@skubiwear.com
+                <a href="mailto:support@skubiwear.com" className="text-ink underline underline-offset-4">
+                  support@skubiwear.com
                 </a>
                 .
               </p>

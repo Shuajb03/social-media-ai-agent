@@ -69,8 +69,8 @@ export default function TermsPage() {
               <h2 className="mb-3 font-display text-xl text-ink">Contact</h2>
               <p>
                 Questions about these terms, an order, or anything else &mdash; reach us at{" "}
-                <a href="mailto:hello@skubiwear.com" className="text-ink underline underline-offset-4">
-                  hello@skubiwear.com
+                <a href="mailto:support@skubiwear.com" className="text-ink underline underline-offset-4">
+                  support@skubiwear.com
                 </a>
                 .
               </p>

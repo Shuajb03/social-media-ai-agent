@@ -38,8 +38,8 @@ export default function ShippingReturnsPage() {
               <p>
                 We accept returns within 30 days of delivery on unworn pieces with original tags
                 still attached. To start a return, email{" "}
-                <a href="mailto:hello@skubiwear.com" className="text-ink underline underline-offset-4">
-                  hello@skubiwear.com
+                <a href="mailto:support@skubiwear.com" className="text-ink underline underline-offset-4">
+                  support@skubiwear.com
                 </a>{" "}
                 with your order number and we&rsquo;ll send return instructions. Once we receive
                 and inspect the piece, we&rsquo;ll issue a refund to your original payment method
