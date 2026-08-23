@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import clsx from "clsx";
@@ -9,8 +9,11 @@ import { Button } from "@/components/ui/Button";
 import { useCartStore } from "@/lib/store/cart";
 import { products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
+import { PayPalCheckoutButton } from "@/components/checkout/PayPalCheckoutButton";
 
-type PaymentMethod = "cod" | "bank-transfer";
+type PaymentMethod = "cod" | "bank-transfer" | "paypal";
+
+const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
 export default function CheckoutPage() {
   const lines = useCartStore((s) => s.lines);
@@ -21,12 +24,19 @@ export default function CheckoutPage() {
   const [orderNumber, setOrderNumber] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const shippingEstimate = subtotal >= 150 || subtotal === 0 ? 0 : 12;
 
+  function handlePayPalSuccess(newOrderNumber: string) {
+    setOrderNumber(newOrderNumber);
+    setPlaced(true);
+    clear();
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (submitting) return;
+    if (submitting || payment === "paypal") return;
     setSubmitting(true);
     setError("");
 
@@ -75,8 +85,8 @@ export default function CheckoutPage() {
             <h1 className="font-display text-3xl text-ink">Order Received</h1>
             <p className="mt-4 text-sm leading-relaxed text-ink/60">
               Order <span className="text-ink">{orderNumber}</span> has been placed via{" "}
-              {payment === "cod" ? "Cash on Delivery" : "Bank Transfer"}. We&rsquo;ll reach out
-              within 24 hours to confirm details and delivery.
+              {payment === "cod" ? "Cash on Delivery" : payment === "paypal" ? "PayPal" : "Bank Transfer"}
+              . We&rsquo;ll reach out within 24 hours to confirm details and delivery.
             </p>
             <Button href="/shop" className="mt-8">
               Continue Shopping
@@ -104,7 +114,7 @@ export default function CheckoutPage() {
     <div className="py-14">
       <Container>
         <h1 className="font-display text-4xl text-ink sm:text-5xl">Checkout</h1>
-        <form onSubmit={handleSubmit} className="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-3">
+        <form ref={formRef} onSubmit={handleSubmit} className="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-3">
           <div className="space-y-10 lg:col-span-2">
             <section>
               <h2 className="mb-5 text-xs uppercase tracking-widest-plus text-ink/50">
@@ -179,6 +189,26 @@ export default function CheckoutPage() {
                   </span>
                   <span className="text-xs text-ink/40">Details sent by email</span>
                 </label>
+                {PAYPAL_CLIENT_ID && (
+                  <label
+                    className={clsx(
+                      "flex cursor-pointer items-center justify-between border p-4",
+                      payment === "paypal" ? "border-ink" : "border-line"
+                    )}
+                  >
+                    <span className="flex items-center gap-3 text-sm text-ink">
+                      <input
+                        type="radio"
+                        name="payment"
+                        checked={payment === "paypal"}
+                        onChange={() => setPayment("paypal")}
+                        className="accent-gold"
+                      />
+                      PayPal
+                    </span>
+                    <span className="text-xs text-ink/40">Card or PayPal balance</span>
+                  </label>
+                )}
               </div>
             </section>
           </div>
@@ -217,9 +247,21 @@ export default function CheckoutPage() {
                 <span>Total</span>
                 <span>{formatPrice(subtotal + shippingEstimate)}</span>
               </div>
-              <Button type="submit" disabled={submitting} className="mt-6 w-full">
-                {submitting ? "Placing Order..." : "Place Order"}
-              </Button>
+              {payment === "paypal" && PAYPAL_CLIENT_ID ? (
+                <div className="mt-6">
+                  <PayPalCheckoutButton
+                    clientId={PAYPAL_CLIENT_ID}
+                    lines={lines}
+                    formRef={formRef}
+                    onSuccess={handlePayPalSuccess}
+                    onError={setError}
+                  />
+                </div>
+              ) : (
+                <Button type="submit" disabled={submitting} className="mt-6 w-full">
+                  {submitting ? "Placing Order..." : "Place Order"}
+                </Button>
+              )}
               {error && (
                 <p className="mt-3 text-center text-xs text-red-700/80">{error}</p>
               )}
