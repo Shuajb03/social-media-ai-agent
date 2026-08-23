@@ -81,13 +81,9 @@ export async function POST(req: NextRequest) {
 
   const sent = await sendNotificationEmail(`New order ${orderNumber} — SKUBI`, html);
 
-  if (!sent.ok) {
-    // TEMPORARY debug field — remove once the Resend integration is confirmed working.
+  if (!sent) {
     return NextResponse.json(
-      {
-        error: "Something went wrong placing your order. Please try again or contact us directly.",
-        debug: sent.reason,
-      },
+      { error: "Something went wrong placing your order. Please try again or contact us directly." },
       { status: 502 }
     );
   }

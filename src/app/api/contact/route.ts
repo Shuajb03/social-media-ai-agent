@@ -23,10 +23,9 @@ export async function POST(req: NextRequest) {
 
   const sent = await sendNotificationEmail(`Contact form: ${topic}`, html);
 
-  if (!sent.ok) {
-    // TEMPORARY debug field — remove once the Resend integration is confirmed working.
+  if (!sent) {
     return NextResponse.json(
-      { error: "Something went wrong sending your message. Please try again.", debug: sent.reason },
+      { error: "Something went wrong sending your message. Please try again." },
       { status: 502 }
     );
   }
