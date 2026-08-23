@@ -39,8 +39,32 @@ export default async function ProductPage({
   const category = getCategory(product.category);
   const related = getRelatedProducts(product);
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    sku: product.sku,
+    brand: { "@type": "Brand", name: "SKUBI" },
+    ...(product.images?.length
+      ? { image: product.images.map((src) => `https://skubiwear.com${src}`) }
+      : {}),
+    offers: {
+      "@type": "Offer",
+      url: `https://skubiwear.com/product/${product.slug}`,
+      priceCurrency: "EUR",
+      price: product.price,
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+  };
+
   return (
     <div className="py-10 sm:py-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
       <Container>
         <nav className="mb-8 flex items-center gap-2 text-xs text-ink/40">
           <Link href="/shop" className="hover:text-ink">

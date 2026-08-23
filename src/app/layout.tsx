@@ -41,10 +41,28 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "SKUBI",
+  url: "https://skubiwear.com",
+  logo: "https://skubiwear.com/brand/sk-mark-ink.png",
+  sameAs: [
+    "https://www.instagram.com/skubiofficial/",
+    "https://www.tiktok.com/@skubiofficial",
+    "https://www.youtube.com/@SkubiBrand",
+    "https://www.facebook.com/profile.php?id=61591775911879",
+  ],
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-cream text-ink antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <AnnouncementBar />
         <Header />
         <MobileMenu />
