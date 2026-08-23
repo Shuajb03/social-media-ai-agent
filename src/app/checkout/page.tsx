@@ -10,6 +10,7 @@ import { useCartStore } from "@/lib/store/cart";
 import { products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 import { PayPalCheckoutButton } from "@/components/checkout/PayPalCheckoutButton";
+import { BANK_DETAILS, bankDetailsConfigured } from "@/lib/bankDetails";
 
 type PaymentMethod = "cod" | "bank-transfer" | "paypal";
 
@@ -22,6 +23,7 @@ export default function CheckoutPage() {
   const [payment, setPayment] = useState<PaymentMethod>("cod");
   const [placed, setPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
+  const [orderTotal, setOrderTotal] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
@@ -30,6 +32,7 @@ export default function CheckoutPage() {
 
   function handlePayPalSuccess(newOrderNumber: string) {
     setOrderNumber(newOrderNumber);
+    setOrderTotal(subtotal + shippingEstimate);
     setPlaced(true);
     clear();
   }
@@ -62,6 +65,7 @@ export default function CheckoutPage() {
 
       if (res.ok) {
         setOrderNumber(result.orderNumber);
+        setOrderTotal(subtotal + shippingEstimate);
         setPlaced(true);
         clear();
       } else {
@@ -86,8 +90,54 @@ export default function CheckoutPage() {
             <p className="mt-4 text-sm leading-relaxed text-ink/60">
               Order <span className="text-ink">{orderNumber}</span> has been placed via{" "}
               {payment === "cod" ? "Cash on Delivery" : payment === "paypal" ? "PayPal" : "Bank Transfer"}
-              . We&rsquo;ll reach out within 24 hours to confirm details and delivery.
+              .{" "}
+              {payment === "bank-transfer"
+                ? "Please complete the transfer below — we'll confirm and prepare your order once it's received."
+                : payment === "paypal"
+                  ? "Your payment has been received — we'll prepare your order for delivery."
+                  : "We'll reach out within 24 hours to confirm details and delivery."}
             </p>
+            {payment === "bank-transfer" && (
+              <div className="mt-6 border border-line bg-cream-soft p-6 text-left">
+                <p className="mb-4 text-[11px] uppercase tracking-widest-plus text-ink/50">
+                  Bank Transfer Details
+                </p>
+                <dl className="space-y-2 text-sm">
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink/50">Amount</dt>
+                    <dd className="text-right text-ink">{formatPrice(orderTotal)}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink/50">Bank</dt>
+                    <dd className="text-right text-ink">{BANK_DETAILS.bankName}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink/50">Account Holder</dt>
+                    <dd className="text-right text-ink">{BANK_DETAILS.accountHolder}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink/50">IBAN</dt>
+                    <dd className="text-right text-ink">{BANK_DETAILS.iban}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink/50">SWIFT/BIC</dt>
+                    <dd className="text-right text-ink">{BANK_DETAILS.swift}</dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-ink/50">Reference</dt>
+                    <dd className="text-right text-ink">{orderNumber}</dd>
+                  </div>
+                </dl>
+                <p className="mt-4 text-xs leading-relaxed text-ink/50">
+                  Please use your order number as the payment reference, and send proof of
+                  payment to{" "}
+                  <a href="mailto:support@skubiwear.com" className="underline underline-offset-4">
+                    support@skubiwear.com
+                  </a>{" "}
+                  so we can confirm and ship your order.
+                </p>
+              </div>
+            )}
             <Button href="/shop" className="mt-8">
               Continue Shopping
             </Button>
@@ -171,24 +221,26 @@ export default function CheckoutPage() {
                   </span>
                   <span className="text-xs text-ink/40">Kosovo only</span>
                 </label>
-                <label
-                  className={clsx(
-                    "flex cursor-pointer items-center justify-between border p-4",
-                    payment === "bank-transfer" ? "border-ink" : "border-line"
-                  )}
-                >
-                  <span className="flex items-center gap-3 text-sm text-ink">
-                    <input
-                      type="radio"
-                      name="payment"
-                      checked={payment === "bank-transfer"}
-                      onChange={() => setPayment("bank-transfer")}
-                      className="accent-gold"
-                    />
-                    Bank Transfer
-                  </span>
-                  <span className="text-xs text-ink/40">Details sent by email</span>
-                </label>
+                {bankDetailsConfigured && (
+                  <label
+                    className={clsx(
+                      "flex cursor-pointer items-center justify-between border p-4",
+                      payment === "bank-transfer" ? "border-ink" : "border-line"
+                    )}
+                  >
+                    <span className="flex items-center gap-3 text-sm text-ink">
+                      <input
+                        type="radio"
+                        name="payment"
+                        checked={payment === "bank-transfer"}
+                        onChange={() => setPayment("bank-transfer")}
+                        className="accent-gold"
+                      />
+                      Bank Transfer
+                    </span>
+                    <span className="text-xs text-ink/40">Details shown after checkout</span>
+                  </label>
+                )}
                 {PAYPAL_CLIENT_ID && (
                   <label
                     className={clsx(
