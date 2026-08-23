@@ -1,9 +1,10 @@
-export async function sendNotificationEmail(subject: string, html: string) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.STORE_NOTIFICATION_EMAIL;
+const FROM_ADDRESS = "SKUBI <support@skubiwear.com>";
 
-  if (!apiKey || !to) {
-    console.error("Email notifications are missing RESEND_API_KEY or STORE_NOTIFICATION_EMAIL.");
+async function sendViaResend(to: string, subject: string, html: string): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.error("Email sending is missing RESEND_API_KEY.");
     return false;
   }
 
@@ -14,7 +15,7 @@ export async function sendNotificationEmail(subject: string, html: string) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      from: "SKUBI Website <onboarding@resend.dev>",
+      from: FROM_ADDRESS,
       to: [to],
       subject,
       html,
@@ -28,4 +29,19 @@ export async function sendNotificationEmail(subject: string, html: string) {
   }
 
   return true;
+}
+
+export async function sendNotificationEmail(subject: string, html: string) {
+  const to = process.env.STORE_NOTIFICATION_EMAIL;
+
+  if (!to) {
+    console.error("Email notifications are missing STORE_NOTIFICATION_EMAIL.");
+    return false;
+  }
+
+  return sendViaResend(to, subject, html);
+}
+
+export async function sendCustomerEmail(to: string, subject: string, html: string) {
+  return sendViaResend(to, subject, html);
 }

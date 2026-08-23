@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendNotificationEmail } from "@/lib/sendEmail";
+import { sendNotificationEmail, sendCustomerEmail } from "@/lib/sendEmail";
 import { products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
+import { BANK_DETAILS, bankDetailsConfigured } from "@/lib/bankDetails";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -56,15 +57,20 @@ export async function POST(req: NextRequest) {
     .join("");
 
   const shipping = subtotal >= 150 ? 0 : 12;
+  const paymentLabel = payment === "cod" ? "Cash on Delivery" : "Bank Transfer";
 
-  const html = `
-    <h2>New order ${orderNumber}</h2>
-    <p><strong>Payment method:</strong> ${payment === "cod" ? "Cash on Delivery" : "Bank Transfer"}</p>
+  const summaryTable = `
     <table style="border-collapse:collapse;width:100%;max-width:480px;">
       ${rows}
       <tr><td style="padding:8px 12px;font-weight:bold;">Shipping</td><td style="padding:8px 12px;text-align:right;">${shipping === 0 ? "Free" : formatPrice(shipping)}</td></tr>
       <tr><td style="padding:8px 12px;font-weight:bold;">Total</td><td style="padding:8px 12px;text-align:right;font-weight:bold;">${formatPrice(subtotal + shipping)}</td></tr>
     </table>
+  `;
+
+  const ownerHtml = `
+    <h2>New order ${orderNumber}</h2>
+    <p><strong>Payment method:</strong> ${paymentLabel}</p>
+    ${summaryTable}
     <h3>Customer</h3>
     <p>
       ${name}<br>
@@ -79,13 +85,41 @@ export async function POST(req: NextRequest) {
     </p>
   `;
 
-  const sent = await sendNotificationEmail(`New order ${orderNumber} — SKUBI`, html);
+  const sent = await sendNotificationEmail(`New order ${orderNumber} — SKUBI`, ownerHtml);
 
   if (!sent) {
     return NextResponse.json(
       { error: "Something went wrong placing your order. Please try again or contact us directly." },
       { status: 502 }
     );
+  }
+
+  const bankBlock =
+    payment === "bank-transfer" && bankDetailsConfigured
+      ? `
+        <h3>Bank Transfer Details</h3>
+        <p>Please transfer the total above using your order number as the reference.</p>
+        <table style="border-collapse:collapse;">
+          <tr><td style="padding:4px 12px 4px 0;color:#666;">Bank</td><td style="padding:4px 0;">${BANK_DETAILS.bankName}</td></tr>
+          <tr><td style="padding:4px 12px 4px 0;color:#666;">Account Holder</td><td style="padding:4px 0;">${BANK_DETAILS.accountHolder}</td></tr>
+          <tr><td style="padding:4px 12px 4px 0;color:#666;">IBAN</td><td style="padding:4px 0;">${BANK_DETAILS.iban}</td></tr>
+          <tr><td style="padding:4px 12px 4px 0;color:#666;">SWIFT/BIC</td><td style="padding:4px 0;">${BANK_DETAILS.swift}</td></tr>
+          <tr><td style="padding:4px 12px 4px 0;color:#666;">Reference</td><td style="padding:4px 0;">${orderNumber}</td></tr>
+        </table>
+      `
+      : "";
+
+  const customerHtml = `
+    <h2>Thanks for your order, ${name}!</h2>
+    <p>Order <strong>${orderNumber}</strong> has been placed via ${paymentLabel}.</p>
+    ${summaryTable}
+    ${bankBlock}
+    <p>We'll reach out within 24 hours to confirm details and delivery. Questions in the meantime? Just reply to this email.</p>
+  `;
+
+  const customerSent = await sendCustomerEmail(email, `Your SKUBI order ${orderNumber}`, customerHtml);
+  if (!customerSent) {
+    console.error(`Order ${orderNumber} notified but the customer confirmation email failed to send.`);
   }
 
   return NextResponse.json({ ok: true, orderNumber });

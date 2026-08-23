@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendNotificationEmail } from "@/lib/sendEmail";
+import { sendNotificationEmail, sendCustomerEmail } from "@/lib/sendEmail";
 import { products } from "@/lib/data/products";
 import { formatPrice } from "@/lib/format";
 import { PAYPAL_API_BASE, getPayPalAccessToken } from "@/lib/paypal";
@@ -85,14 +85,18 @@ export async function POST(req: NextRequest) {
 
   const shipping = subtotal >= 150 ? 0 : 12;
 
-  const html = `
-    <h2>New order ${orderNumber} — Paid via PayPal</h2>
-    <p><strong>PayPal order ID:</strong> ${orderID}</p>
+  const summaryTable = `
     <table style="border-collapse:collapse;width:100%;max-width:480px;">
       ${rows}
       <tr><td style="padding:8px 12px;font-weight:bold;">Shipping</td><td style="padding:8px 12px;text-align:right;">${shipping === 0 ? "Free" : formatPrice(shipping)}</td></tr>
       <tr><td style="padding:8px 12px;font-weight:bold;">Total</td><td style="padding:8px 12px;text-align:right;font-weight:bold;">${formatPrice(subtotal + shipping)}</td></tr>
     </table>
+  `;
+
+  const ownerHtml = `
+    <h2>New order ${orderNumber} — Paid via PayPal</h2>
+    <p><strong>PayPal order ID:</strong> ${orderID}</p>
+    ${summaryTable}
     <h3>Customer</h3>
     <p>
       ${name}<br>
@@ -107,9 +111,21 @@ export async function POST(req: NextRequest) {
     </p>
   `;
 
-  const sent = await sendNotificationEmail(`New order ${orderNumber} — SKUBI (PayPal)`, html);
+  const sent = await sendNotificationEmail(`New order ${orderNumber} — SKUBI (PayPal)`, ownerHtml);
   if (!sent) {
     console.error(`Order ${orderNumber} captured on PayPal but the notification email failed to send.`);
+  }
+
+  const customerHtml = `
+    <h2>Thanks for your order, ${name}!</h2>
+    <p>Order <strong>${orderNumber}</strong> has been paid via PayPal — your payment has been received.</p>
+    ${summaryTable}
+    <p>We'll prepare your order for delivery. Questions in the meantime? Just reply to this email.</p>
+  `;
+
+  const customerSent = await sendCustomerEmail(email, `Your SKUBI order ${orderNumber}`, customerHtml);
+  if (!customerSent) {
+    console.error(`Order ${orderNumber} captured on PayPal but the customer confirmation email failed to send.`);
   }
 
   return NextResponse.json({ ok: true, orderNumber });
