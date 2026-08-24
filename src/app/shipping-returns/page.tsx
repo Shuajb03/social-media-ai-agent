@@ -19,8 +19,9 @@ export default function ShippingReturnsPage() {
               <h2 className="mb-3 font-display text-xl text-ink">Where we ship</h2>
               <p>
                 We ship across Kosovo and the wider EU. Cash on Delivery is available for Kosovo
-                orders; Bank Transfer is available everywhere we ship, with details sent by email
-                after you place your order.
+                orders; Bank Transfer and PayPal are available everywhere we ship. Choosing Bank
+                Transfer shows our account details immediately at checkout, and we&rsquo;ll also
+                email them to you for reference.
               </p>
             </section>
 

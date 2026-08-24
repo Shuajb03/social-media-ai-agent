@@ -24,8 +24,9 @@ export default function TermsPage() {
             <section>
               <h2 className="mb-3 font-display text-xl text-ink">Orders &amp; payment</h2>
               <p>
-                We currently accept Cash on Delivery (Kosovo only) and Bank Transfer (Kosovo and
-                the wider EU). Prices are shown in Euros and include VAT where applicable. We
+                We currently accept Cash on Delivery (Kosovo only), Bank Transfer, and PayPal
+                (Kosovo and the wider EU). Prices are shown in Euros and include VAT where
+                applicable. We
                 reserve the right to decline or cancel an order &mdash; for example if a piece is
                 out of stock &mdash; in which case we&rsquo;ll contact you directly.
               </p>

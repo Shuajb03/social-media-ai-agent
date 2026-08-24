@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "Where do you ship?",
-    a: "We ship across Kosovo and the wider EU, with Cash on Delivery available for Kosovo orders and bank transfer everywhere else.",
+    a: "We ship across Kosovo and the wider EU, with Cash on Delivery available for Kosovo orders, plus Bank Transfer and PayPal everywhere we ship.",
   },
   {
     q: "What's your returns policy?",
