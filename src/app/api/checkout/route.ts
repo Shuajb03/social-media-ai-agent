@@ -39,6 +39,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Please fill in all required fields." }, { status: 400 });
   }
 
+  const hasUnavailableItem = lines.some((line) => {
+    const product = products.find((p) => p.id === line.productId);
+    return !product || product.available !== true;
+  });
+  if (hasUnavailableItem) {
+    return NextResponse.json(
+      { error: "One or more items in your bag are not yet available to order." },
+      { status: 400 }
+    );
+  }
+
   const orderNumber = `SKB-${Math.floor(100000 + Math.random() * 900000)}`;
 
   let subtotal = 0;

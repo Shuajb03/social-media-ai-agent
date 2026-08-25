@@ -14,6 +14,7 @@ import { SizeGuideModal } from "@/components/product/SizeGuideModal";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import { useUIStore } from "@/lib/store/ui";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 const VIEW_TONES: Array<"ink" | "cream" | "gold"> = ["ink", "cream", "gold"];
 
@@ -40,6 +41,7 @@ export function ProductClient({
 
   const hasRealImages = Boolean(product.images && product.images.length > 0);
   const viewCount = hasRealImages ? product.images!.length : VIEW_TONES.length;
+  const isAvailable = product.available === true;
 
   function handleAddToCart() {
     if (!size) {
@@ -122,101 +124,117 @@ export function ProductClient({
         </div>
         <p className="mt-6 max-w-md text-sm leading-relaxed text-ink/70">{product.description}</p>
 
-        <div className="mt-8">
-          <p className="mb-3 text-xs uppercase tracking-widest-plus text-ink/50">
-            Color &mdash; {color}
-          </p>
-          <div className="flex flex-wrap gap-3">
-            {product.colors.map((c) => (
-              <button
-                key={c.name}
-                type="button"
-                aria-label={c.name}
-                title={c.name}
-                onClick={() => setColor(c.name)}
-                className={clsx(
-                  "h-8 w-8 rounded-full border transition-shadow",
-                  color === c.name
-                    ? "ring-2 ring-gold ring-offset-2 ring-offset-cream"
-                    : "border-line"
-                )}
-                style={{ backgroundColor: c.hex }}
-              />
-            ))}
-          </div>
-        </div>
+        {isAvailable ? (
+          <>
+            <div className="mt-8">
+              <p className="mb-3 text-xs uppercase tracking-widest-plus text-ink/50">
+                Color &mdash; {color}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {product.colors.map((c) => (
+                  <button
+                    key={c.name}
+                    type="button"
+                    aria-label={c.name}
+                    title={c.name}
+                    onClick={() => setColor(c.name)}
+                    className={clsx(
+                      "h-8 w-8 rounded-full border transition-shadow",
+                      color === c.name
+                        ? "ring-2 ring-gold ring-offset-2 ring-offset-cream"
+                        : "border-line"
+                    )}
+                    style={{ backgroundColor: c.hex }}
+                  />
+                ))}
+              </div>
+            </div>
 
-        <div className="mt-8">
-          <div className="mb-3 flex items-center justify-between">
-            <p className="text-xs uppercase tracking-widest-plus text-ink/50">
-              Size {size && `— ${size}`}
-            </p>
-            <SizeGuideModal />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {product.sizes.map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => {
-                  setSize(s);
-                  setSizeError(false);
-                }}
-                className={clsx(
-                  "min-w-[3rem] border px-3 py-2.5 text-xs",
-                  size === s
-                    ? "border-ink bg-ink text-cream"
-                    : "border-line text-ink hover:border-ink"
+            <div className="mt-8">
+              <div className="mb-3 flex items-center justify-between">
+                <p className="text-xs uppercase tracking-widest-plus text-ink/50">
+                  Size {size && `— ${size}`}
+                </p>
+                <SizeGuideModal />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {product.sizes.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => {
+                      setSize(s);
+                      setSizeError(false);
+                    }}
+                    className={clsx(
+                      "min-w-[3rem] border px-3 py-2.5 text-xs",
+                      size === s
+                        ? "border-ink bg-ink text-cream"
+                        : "border-line text-ink hover:border-ink"
+                    )}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+              {sizeError && (
+                <p className="mt-2 text-xs text-red-700/80">Please select a size to continue.</p>
+              )}
+            </div>
+
+            <div className="mt-8 flex items-center gap-4">
+              <div className="flex items-center gap-4 border border-line px-3 py-3">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                >
+                  <Minus className="h-3.5 w-3.5" strokeWidth={1.5} />
+                </button>
+                <span className="w-4 text-center text-sm">{quantity}</span>
+                <button
+                  type="button"
+                  aria-label="Increase quantity"
+                  onClick={() => setQuantity((q) => q + 1)}
+                >
+                  <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
+                </button>
+              </div>
+              <Button onClick={handleAddToCart} size="lg" className="flex-1">
+                {added ? (
+                  <>
+                    <Check className="h-4 w-4" strokeWidth={1.5} /> Added to Bag
+                  </>
+                ) : (
+                  "Add to Bag"
                 )}
+              </Button>
+              <button
+                type="button"
+                aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                onClick={() => toggleWishlist(product.id)}
+                className="flex h-[52px] w-[52px] shrink-0 items-center justify-center border border-line hover:border-ink"
               >
-                {s}
+                <Heart
+                  className={clsx("h-4 w-4", wishlisted ? "fill-gold text-gold" : "text-ink")}
+                  strokeWidth={1.5}
+                />
               </button>
-            ))}
+            </div>
+          </>
+        ) : (
+          <div className="mt-8 border border-line bg-cream-soft p-6">
+            <p className="mb-2 text-xs uppercase tracking-widest-plus text-gold-deep">
+              Coming Soon
+            </p>
+            <p className="mb-5 text-sm leading-relaxed text-ink/70">
+              This piece is still being developed &mdash; not manufactured yet, so it&rsquo;s
+              not available to order. Join the list and we&rsquo;ll let you know the moment
+              it&rsquo;s ready.
+            </p>
+            <NewsletterForm tone="ink" />
           </div>
-          {sizeError && (
-            <p className="mt-2 text-xs text-red-700/80">Please select a size to continue.</p>
-          )}
-        </div>
-
-        <div className="mt-8 flex items-center gap-4">
-          <div className="flex items-center gap-4 border border-line px-3 py-3">
-            <button
-              type="button"
-              aria-label="Decrease quantity"
-              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            >
-              <Minus className="h-3.5 w-3.5" strokeWidth={1.5} />
-            </button>
-            <span className="w-4 text-center text-sm">{quantity}</span>
-            <button
-              type="button"
-              aria-label="Increase quantity"
-              onClick={() => setQuantity((q) => q + 1)}
-            >
-              <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
-            </button>
-          </div>
-          <Button onClick={handleAddToCart} size="lg" className="flex-1">
-            {added ? (
-              <>
-                <Check className="h-4 w-4" strokeWidth={1.5} /> Added to Bag
-              </>
-            ) : (
-              "Add to Bag"
-            )}
-          </Button>
-          <button
-            type="button"
-            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-            onClick={() => toggleWishlist(product.id)}
-            className="flex h-[52px] w-[52px] shrink-0 items-center justify-center border border-line hover:border-ink"
-          >
-            <Heart
-              className={clsx("h-4 w-4", wishlisted ? "fill-gold text-gold" : "text-ink")}
-              strokeWidth={1.5}
-            />
-          </button>
-        </div>
+        )}
 
         <div className="mt-12">
           <Accordion

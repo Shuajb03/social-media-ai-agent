@@ -29,6 +29,7 @@ export interface Product {
   tag?: string;
   tone: "ink" | "cream" | "gold";
   images?: string[];
+  available?: boolean;
 }
 
 export interface JournalPost {
