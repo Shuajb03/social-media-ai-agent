@@ -54,7 +54,10 @@ export default async function ProductPage({
       url: `https://skubiwear.com/product/${product.slug}`,
       priceCurrency: "EUR",
       price: product.price,
-      availability: "https://schema.org/InStock",
+      availability:
+        product.available === true
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
       itemCondition: "https://schema.org/NewCondition",
     },
   };
