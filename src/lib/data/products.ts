@@ -103,6 +103,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-TP-003",
     tag: "Chapter I",
+    images: ["/products/founders-crewneck.jpg"],
     tone: "gold",
   },
   {
