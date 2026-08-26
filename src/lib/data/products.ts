@@ -63,6 +63,7 @@ export const products: Product[] = [
       "Adjustable strap",
     ],
     sku: "SKB-AC-005",
+    images: ["/products/quiet-flexer-cap.jpg"],
     tone: "ink",
   },
   {
@@ -180,6 +181,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-BT-002",
     tag: "Chapter I",
+    images: ["/products/heritage-shorts.jpg"],
     tone: "cream",
   },
   {
@@ -199,6 +201,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-BT-003",
     tag: "Chapter I",
+    images: ["/products/relaxed-trouser.jpg"],
     tone: "gold",
   },
 ];
