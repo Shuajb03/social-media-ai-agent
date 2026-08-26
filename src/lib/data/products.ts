@@ -12,7 +12,7 @@ export const products: Product[] = [
     slug: "skubi-crest-tee",
     name: "SKUBI Crest Tee",
     category: "tops",
-    price: 65,
+    price: 49.99,
     colors: [INK],
     sizes: SIZES,
     description:
