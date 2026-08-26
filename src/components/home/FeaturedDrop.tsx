@@ -28,7 +28,7 @@ export function FeaturedDrop() {
             <p className="mt-6 text-2xl font-medium">{formatPrice(product.price)}</p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button href={`/product/${product.slug}`} variant="secondary" size="lg">
-                Shop This Piece
+                {product.available === true ? "Shop This Piece" : "View This Piece"}
               </Button>
               <Button href="/shop/tops" variant="outline-cream" size="lg">
                 View Tops

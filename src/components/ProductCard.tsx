@@ -35,6 +35,13 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             )}
           </div>
+          {product.available !== true && (
+            <div className="absolute bottom-3 left-3">
+              <span className="bg-ink/85 px-2.5 py-1 text-[10px] uppercase tracking-widest-plus text-cream">
+                Coming Soon
+              </span>
+            </div>
+          )}
         </div>
       </Link>
       <button

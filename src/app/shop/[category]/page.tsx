@@ -35,7 +35,7 @@ export default async function CategoryPage({
   if (!category) notFound();
 
   const categoryProducts = products.filter((p) => p.category === category.id);
-  const hasComingSoon = categoryProducts.some((p) => !p.images || p.images.length === 0);
+  const hasComingSoon = categoryProducts.some((p) => p.available !== true);
 
   return (
     <div className="pb-14 sm:pb-16">

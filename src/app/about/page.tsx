@@ -67,7 +67,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/5] overflow-hidden">
               <Image
-                src="/products/skubi-crest-tee-detail.jpg"
+                src="/products/skubi-crest-tee.jpg"
                 alt="SK crest detail on the SKUBI Crest Tee"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
