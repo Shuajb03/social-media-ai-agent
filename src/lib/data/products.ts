@@ -12,7 +12,7 @@ export const products: Product[] = [
     slug: "skubi-crest-tee",
     name: "SKUBI Crest Tee",
     category: "tops",
-    price: 49.99,
+    price: 43,
     colors: [INK],
     sizes: SIZES,
     description:
@@ -33,7 +33,7 @@ export const products: Product[] = [
     slug: "founders-hoodie",
     name: "Founder's Hoodie",
     category: "tops",
-    price: 135,
+    price: 75,
     colors: [INK, STONE, GOLD],
     sizes: SIZES,
     description:
@@ -52,7 +52,7 @@ export const products: Product[] = [
     slug: "quiet-flexer-cap",
     name: "Quiet Flexer Cap",
     category: "accessories",
-    price: 60,
+    price: 22,
     colors: [INK, STONE],
     sizes: ["One Size"],
     description:
@@ -71,7 +71,7 @@ export const products: Product[] = [
     slug: "long-sleeve-heritage-tee",
     name: "Long-Sleeve Heritage Tee",
     category: "tops",
-    price: 75,
+    price: 55,
     colors: [INK, STONE],
     sizes: SIZES,
     description:
@@ -91,7 +91,7 @@ export const products: Product[] = [
     slug: "founders-crewneck",
     name: "Founder's Crewneck",
     category: "tops",
-    price: 120,
+    price: 60,
     colors: [INK, STONE, GOLD],
     sizes: SIZES,
     description:
@@ -111,7 +111,7 @@ export const products: Product[] = [
     slug: "signature-polo",
     name: "Signature Polo",
     category: "tops",
-    price: 95,
+    price: 45,
     colors: [INK, STONE],
     sizes: SIZES,
     description:
@@ -131,7 +131,7 @@ export const products: Product[] = [
     slug: "heritage-quarter-zip",
     name: "Heritage Quarter-Zip",
     category: "tops",
-    price: 125,
+    price: 70,
     colors: [INK, STONE, GOLD],
     sizes: SIZES,
     description:
@@ -151,7 +151,7 @@ export const products: Product[] = [
     slug: "signature-sweatpants",
     name: "Signature Sweatpants",
     category: "bottoms",
-    price: 110,
+    price: 65,
     colors: [INK, STONE],
     sizes: SIZES,
     description:
@@ -171,7 +171,7 @@ export const products: Product[] = [
     slug: "heritage-shorts",
     name: "Heritage Shorts",
     category: "bottoms",
-    price: 80,
+    price: 45,
     colors: [INK, STONE],
     sizes: SIZES,
     description:
@@ -191,7 +191,7 @@ export const products: Product[] = [
     slug: "relaxed-trouser",
     name: "Relaxed Trouser",
     category: "bottoms",
-    price: 130,
+    price: 110,
     colors: [INK, STONE],
     sizes: SIZES,
     description:
