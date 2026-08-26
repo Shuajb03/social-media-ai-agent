@@ -143,6 +143,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-TP-006",
     tag: "Chapter I",
+    images: ["/products/heritage-quarter-zip.jpg"],
     tone: "ink",
   },
   {
