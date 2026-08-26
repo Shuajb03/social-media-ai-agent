@@ -25,6 +25,7 @@ export const products: Product[] = [
     sku: "SKB-TP-001",
     isNew: true,
     tag: "Chapter I",
+    images: ["/products/skubi-crest-tee.jpg"],
     tone: "ink",
   },
   {
@@ -43,6 +44,7 @@ export const products: Product[] = [
       "Machine wash cold, inside out",
     ],
     sku: "SKB-TP-004",
+    images: ["/products/founders-hoodie.jpg"],
     tone: "gold",
   },
   {
@@ -80,6 +82,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-TP-002",
     tag: "Chapter I",
+    images: ["/products/long-sleeve-heritage-tee.jpg"],
     tone: "cream",
   },
   {
@@ -118,6 +121,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-TP-005",
     tag: "Chapter I",
+    images: ["/products/signature-polo.jpg"],
     tone: "cream",
   },
   {
@@ -156,6 +160,7 @@ export const products: Product[] = [
     ],
     sku: "SKB-BT-001",
     tag: "Chapter I",
+    images: ["/products/signature-sweatpants.jpg"],
     tone: "ink",
   },
   {
